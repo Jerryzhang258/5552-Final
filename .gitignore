@@ -12,3 +12,9 @@ CMakeLists.txt.user
 *.swp
 *.swo
 .DS_Store
+
+# Large files
+Miniconda3-*.sh
+*.usd.bak
+.demo_logs/
+configuration/

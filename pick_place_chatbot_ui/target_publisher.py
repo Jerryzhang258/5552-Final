@@ -129,11 +129,14 @@ def main():
     node = TargetPublisher()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, Exception):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        try:
+            rclpy.shutdown()
+        except Exception:
+            pass  # 避免其他进程已 shutdown 时重复调用报错
 
 
 if __name__ == '__main__':

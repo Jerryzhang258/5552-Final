@@ -45,6 +45,19 @@ This allows users to **command the robot in plain English**, enabling smart and 
 
 ## 🤖 Running the Demo  
 
+### 最简运行（推荐）
+```bash
+cd ~/nlp-pnp-robotic-arm
+source /opt/ros/humble/setup.bash && source install/setup.bash
+./run_full_demo.sh
+```
+然后：Isaac 里打开场景并 **Play**，RVIZ 里 **Plan & Execute**。  
+**通信逻辑（简单有效）**：两条链（手动 RVIZ / 聊天抓取）、话题与节点一览、排查步骤 → [docs/COMMUNICATION.md](docs/COMMUNICATION.md)。
+
+---
+
+### 分步运行（原流程）
+
 1. Clone the directory and navigate into the project folder:
 ```bash
    git clone https://github.com/sahilrajpurkar03/nlp-pnp-robotic-arm.git

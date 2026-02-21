@@ -1,11 +1,11 @@
 # This config file is used by ros2_control
+# arm_controller 不在此加载：由 trajectory_to_isaac_relay 提供 action，直接发 /isaac_joint_commands 给 Isaac
 controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
-    arm_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
+    # arm_controller:
+    #   type: joint_trajectory_controller/JointTrajectoryController
 
     gripper_controller:
       type: position_controllers/GripperActionController

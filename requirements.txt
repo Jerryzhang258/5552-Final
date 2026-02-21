@@ -6,7 +6,7 @@ annotated-types==0.7.0
 anyio==4.10.0
 asttokens==3.0.0
 async-timeout==5.0.1
-av==14.4.0
+# av 已移除：从源码编译与系统 FFmpeg/Cython 不兼容；Chatbot/YOLO 不依赖
 blinker==1.9.0
 catkin-pkg==1.0.0
 certifi==2025.8.3

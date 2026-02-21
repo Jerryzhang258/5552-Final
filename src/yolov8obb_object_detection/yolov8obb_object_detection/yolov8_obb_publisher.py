@@ -13,12 +13,36 @@ from yolov8_msgs.msg import Yolov8Inference
 
 bridge = CvBridge()
 
+def _find_model():
+    # 1) 环境变量
+    env_path = os.environ.get("YOLO_MODEL_PATH")
+    if env_path and os.path.isfile(env_path):
+        return env_path
+    # 2) 本包目录（src 或 install 下的 share）
+    pkg_dir = os.path.dirname(os.path.abspath(__file__))
+    for candidate in [
+        os.path.join(pkg_dir, "best.pt"),
+        os.path.join(pkg_dir, "weights", "best.pt"),
+        os.path.join(os.path.dirname(pkg_dir), "best.pt"),
+    ]:
+        if os.path.isfile(candidate):
+            return candidate
+    # 3) 原仓库路径（兼容旧环境）
+    legacy = os.path.join(os.environ.get("HOME", ""), "Isaac_Project/pickPlaceChatMoveitBot_ws/src/yolov8obb_object_detection/yolov8obb_object_detection/best.pt")
+    if os.path.isfile(legacy):
+        return legacy
+    # 4) 无权重时用预训练模型，仅做占位（OBB 需自行训练 best.pt）
+    return "yolov8n.pt"
+
 class Camera_subscriber(Node):
 
     def __init__(self):
         super().__init__('camera_subscriber')
 
-        self.model = YOLO(os.environ['HOME'] + '/Isaac_Project/pickPlaceChatMoveitBot_ws/src/yolov8obb_object_detection/yolov8obb_object_detection/best.pt')
+        model_path = _find_model()
+        if "yolov8n" in model_path:
+            self.get_logger().warn("未找到 best.pt，使用 yolov8n.pt。请将训练好的 best.pt 放到本包目录或设置 YOLO_MODEL_PATH。")
+        self.model = YOLO(model_path)
 
         self.yolov8_inference = Yolov8Inference()
 
